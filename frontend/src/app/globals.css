@@ -1,26 +1,232 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Thai Royal Colors - Deep Blue and Gold */
+  --thai-gold: #C9A227;
+  --thai-gold-light: #E8D48A;
+  --thai-gold-dark: #9A7B1B;
+  --thai-royal-blue: #1E3A5F;
+  --thai-royal-blue-dark: #0F1E33;
+  --thai-royal-blue-light: #2D5A8A;
+  --thai-cream: #FDF8E8;
+  --thai-ivory: #FFFEF7;
+  
+  /* Chat colors */
+  --user-bubble: var(--thai-royal-blue);
+  --assistant-bubble: var(--thai-gold);
+  --background: var(--thai-ivory);
+  --foreground: #1A1A1A;
+  --muted: #6B7280;
+  --border: rgba(30, 58, 95, 0.15);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(30, 58, 95, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(30, 58, 95, 0.1), 0 2px 4px -1px rgba(30, 58, 95, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(30, 58, 95, 0.1), 0 4px 6px -2px rgba(30, 58, 95, 0.05);
+  --shadow-gold: 0 4px 14px 0 rgba(201, 162, 39, 0.25);
 }
 
 @theme inline {
+  --color-thai-gold: var(--thai-gold);
+  --color-thai-gold-light: var(--thai-gold-light);
+  --color-thai-gold-dark: var(--thai-gold-dark);
+  --color-thai-royal-blue: var(--thai-royal-blue);
+  --color-thai-royal-blue-dark: var(--thai-royal-blue-dark);
+  --color-thai-royal-blue-light: var(--thai-royal-blue-light);
+  --color-thai-cream: var(--thai-cream);
+  --color-thai-ivory: var(--thai-ivory);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sarabun), var(--font-geist-sans), system-ui;
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--thai-royal-blue-dark);
+    --foreground: var(--thai-cream);
+    --user-bubble: var(--thai-gold);
+    --assistant-bubble: var(--thai-royal-blue);
+    --border: rgba(201, 162, 39, 0.2);
   }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thai-gold) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--thai-gold);
+  border-radius: 3px;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* Thai decorative pattern background */
+.thai-pattern-bg {
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(201, 162, 39, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(30, 58, 95, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(201, 162, 39, 0.03) 0%, transparent 40%);
+}
+
+/* Chat container gradient */
+.chat-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--thai-ivory) 0%,
+    rgba(253, 248, 232, 0.95) 50%,
+    rgba(232, 212, 138, 0.1) 100%
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  .chat-gradient {
+    background: linear-gradient(
+      180deg,
+      var(--thai-royal-blue-dark) 0%,
+      rgba(15, 30, 51, 0.98) 50%,
+      rgba(30, 58, 95, 0.3) 100%
+    );
+  }
+}
+
+/* Gold shimmer effect for buttons */
+.gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--thai-gold) 0%,
+    var(--thai-gold-light) 50%,
+    var(--thai-gold) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Message animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-animate {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Pulse animation for recording */
+@keyframes pulse-record {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
+.recording-pulse {
+  animation: pulse-record 1.5s ease-in-out infinite;
+}
+
+/* Sound wave animation */
+@keyframes soundWave {
+  0%, 100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.sound-wave-bar {
+  animation: soundWave 0.5s ease-in-out infinite;
+}
+
+.sound-wave-bar:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.sound-wave-bar:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.sound-wave-bar:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+/* Typing indicator */
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+}
+
+.typing-dot {
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Focus styles */
+.input-focus {
+  transition: all 0.2s ease;
+}
+
+.input-focus:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.3);
+  border-color: var(--thai-gold);
+}
+
+/* Button hover effects */
+.btn-thai {
+  transition: all 0.2s ease;
+}
+
+.btn-thai:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-thai:active {
+  transform: translateY(0);
 }
