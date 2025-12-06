@@ -19,6 +19,7 @@ interface TTSRequestBody {
 router.post('/', async (req: Request<object, unknown, TTSRequestBody>, res: Response, next: NextFunction) => {
   try {
     const { text, voiceId, modelId } = req.body;
+    console.log('text', text);
 
     if (!text) {
       res.status(400).json({ error: 'Text is required' });

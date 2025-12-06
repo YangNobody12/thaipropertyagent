@@ -1,11 +1,11 @@
-import express, { Request, Response, NextFunction } from 'express';
+// Load environment variables FIRST before any other imports
 import dotenv from 'dotenv';
+dotenv.config();
+
+import express, { Request, Response, NextFunction } from 'express';
 import { corsMiddleware } from './middleware/cors';
 import ttsRoutes from './routes/tts';
 import chatRoutes from './routes/chat';
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
